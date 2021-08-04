@@ -1,25 +1,28 @@
-import React, { useLayoutEffect } from 'react'
-import { FlatList, Text, StyleSheet } from 'react-native'
+import React, { useLayoutEffect, useEffect } from 'react'
+import { FlatList, StyleSheet } from 'react-native'
 import { Card, EventItem, HeaderButton} from '../../components'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { loadEvents } from '../../store/actions/events.action'
+import { COLORS } from '../../constants'
 
-const renderItem = (itemData,navigation) => {
-    console.log(itemData)
+const renderItem = (item,navigation) => {
     return(
     <Card>
         <EventItem 
             address={null}
-            image={itemData.item.image} 
-            onSelect={() => navigation.push('Detalle')}
-            title={itemData.item.title}
+            image={item.image} 
+            onSelect={() => navigation.navigate('Detalle',{item: item})}
+            title={item.title}
         />
     </Card>
 )}
 
 const PlaceListScreen = ({navigation}) => {
+    const dispatch = useDispatch()
     const events = useSelector(state => state.events.events)
 
+    console.log(events)
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -27,17 +30,22 @@ const PlaceListScreen = ({navigation}) => {
                     <Item 
                         title='+'
                         iconName='add-circle'
+                        color={COLORS.PRIMARY}
                         onPress={() => navigation.push('Nuevo')}
                     />
                 </HeaderButtons>
             )
         })
     })
+    useEffect(()=>{
+        dispatch(loadEvents())
+    },[])
+
     return (
         <FlatList 
         data={events}
         keyExtractor={item => item.id}
-        renderItem={itemData => renderItem(itemData,navigation)}
+        renderItem={itemData => renderItem(itemData.item,navigation)}
         style={styles.container}/>
     )
 }

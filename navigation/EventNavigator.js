@@ -33,8 +33,7 @@ const EventNavigator = () => (
         />
         <EventStack.Screen
             name="Detalle"
-            component={EventDetails}
-            options={{title: 'Detalle evento'}} 
+            component={EventDetails} 
         />
         <EventStack.Screen
             name="Nuevo"

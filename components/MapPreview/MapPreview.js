@@ -21,6 +21,6 @@ import { API_MAP_KEY } from '../../constants'
     );
 }*/
 
-const MapPreview = () => (null)
+const MapPreview = () => (<Text> MapPreview </Text>)
 
 export default MapPreview

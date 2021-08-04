@@ -1,4 +1,4 @@
-import {ADD_EVENT} from '../actions/events.action'
+import { ADD_EVENT, LOAD_EVENTS } from '../actions/events.action'
 import Event from '../../models/Event'
 
 const initialState = {
@@ -16,7 +16,16 @@ export default (state = initialState, action) => {
                 payload.description, 
                 payload.image,
             );
-            return {...state, events: [...state.events, newEvent] };
+            return {...state, events: [...state.events, newEvent] };ç
+        case LOAD_EVENTS:
+            console.log("load")
+            return {...state, events:
+                action.payload.map(item => new Event(
+                    item.id.toString(),
+                    item.title, 
+                    item.description, 
+                    item.image,
+                ))};
         default:
             return state;
     }

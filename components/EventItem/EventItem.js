@@ -1,8 +1,8 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { ImageBackground, StyleSheet, TouchableOpacity, Text, View } from 'react-native'
+import { COLORS } from '../../constants'
 
 const EventItem = ({address,image,title,onSelect}) => {
-    console.log("EventItem: ",image)
     return (
         <TouchableOpacity
             onPress={onSelect}
@@ -14,8 +14,13 @@ const EventItem = ({address,image,title,onSelect}) => {
                 style={styles.image}
                 resizeMode='cover'
             >
-                <Text> {title} </Text>
-                <Text> {address} </Text>
+                <View style={styles.textContainer}>
+                    <Text styles={styles.text}> {title} </Text>
+                    <Text> {address} </Text>
+                </View>
+                {!image && (
+                    <Text> Nada para ver por acá...</Text>
+                )}
             </ImageBackground>
         </TouchableOpacity>
     )
@@ -25,7 +30,17 @@ const styles = StyleSheet.create({
     image:{
         height: '100%',
         width: '100%',
+        backgroundColor: COLORS.VIOLET,
     },
+    text:{
+        fontWeight: 'bold',
+    },
+    textContainer:{
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+    }
 })
 
 export default EventItem

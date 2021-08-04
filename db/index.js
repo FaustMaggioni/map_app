@@ -1,4 +1,4 @@
-import { SQLite } from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('events.db');
 
@@ -13,7 +13,7 @@ export const init = () => {
                  image TEXT NOT NULL, 
                  address TEXT NOT NULL, 
                  lat REAL NOT NULL, 
-                 lng REAL NOT NULL, ))`,
+                 lng REAL NOT NULL )`,
                 [],
                 ()=> { resolve()},
                 (_, err) => { reject(err)})
@@ -42,8 +42,18 @@ export const insertEvent = (
             )
         })
     })
+
+    return promise
 }
 
 export const fetchEvents = () => {
-    
+    const promise = new Promise((resolve, reject) => {
+        db.transaction( tx => {
+            tx.executeSql(`SELECT * FROM events`),
+            [],
+            (_, result) => resolve(result),
+            (_, err) => reject(err)
+        })
+    })
+    return promise;
 }

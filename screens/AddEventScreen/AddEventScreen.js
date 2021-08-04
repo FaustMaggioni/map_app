@@ -65,9 +65,11 @@ const AddEventScreen = ({navigation}) => {
                 style={styles.input}/>
             <TextInput
                 onChangeText={onHandlerDescription} 
+                multiline
+                numberOfLines={5}
                 placeholder='Descripción'
                 value={state.description}
-                style={styles.input}/>
+                style={[styles.input,styles.inputDescription]}/>
             <ImageSelector onImage={onHandlerImageTaken}/>
             <LocationPicker/>
             <Button color={COLORS.SECONDARY} title="Confirmar evento" onPress={onHandlerSave}/>
@@ -88,6 +90,9 @@ const styles = StyleSheet.create({
         height: 35,
         marginVertical: 5,
         width: '100%',
+    },
+    inputDescription:{
+        height: 100,
     },
     text:{
         color: COLORS.ACCENT,

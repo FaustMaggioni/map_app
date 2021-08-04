@@ -44,7 +44,6 @@ const ImageSelector = ({onImage}) => {
                     <Image
                         style={styles.image}
                         source={{uri: pickedUri}}
-                        resizeMode='cover'
                     />
                 )}
             </View>
@@ -59,8 +58,12 @@ const ImageSelector = ({onImage}) => {
 
 const styles = StyleSheet.create({
     image: {
-        height: 200,
-        width: 200,
+        alignSelf: 'center',
+        borderRadius: 10,
+        height: 300,
+        margin: 5,
+        resizeMode: 'cover',
+        width: '100%',
     },
 })
 

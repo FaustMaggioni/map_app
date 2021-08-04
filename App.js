@@ -10,8 +10,7 @@ import { init } from './db'
 init()
   .then(() => {console.log('DB initialized')})
   .catch((err) => {
-    console.log('Database error')
-    console.log(err);
+    console.log('Database error',err)
   })
 
 export default function App() {
