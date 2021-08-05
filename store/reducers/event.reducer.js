@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
             );
             return {...state, events: [...state.events, newEvent] };ç
         case LOAD_EVENTS:
-            console.log("load")
+            console.log("load", action.payload)
             return {...state, events:
                 action.payload.map(item => new Event(
                     item.id.toString(),

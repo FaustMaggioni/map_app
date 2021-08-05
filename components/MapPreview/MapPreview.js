@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { API_MAP_KEY } from '../../constants'
 
 /*const MapPreview = ({ location, additionalStyles, children }) => {
@@ -21,6 +21,12 @@ import { API_MAP_KEY } from '../../constants'
     );
 }*/
 
-const MapPreview = () => (<Text> MapPreview </Text>)
+const MapPreview = ({onPress}) => {
+    return(
+        <TouchableOpacity onPress={onPress}>
+            <Text> Proximamente MapPreview </Text>
+        </TouchableOpacity>
+    )
+}
 
 export default MapPreview

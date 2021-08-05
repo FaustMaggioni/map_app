@@ -55,6 +55,10 @@ const AddEventScreen = ({navigation}) => {
         navigation.goBack();
     }
 
+    const handlerSelectMap = () => {
+        navigation.navigate('Map')
+    }
+
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.text}> Ingrese los datos del evento </Text>
@@ -71,7 +75,7 @@ const AddEventScreen = ({navigation}) => {
                 value={state.description}
                 style={[styles.input,styles.inputDescription]}/>
             <ImageSelector onImage={onHandlerImageTaken}/>
-            <LocationPicker/>
+            <LocationPicker onSelect={handlerSelectMap} />
             <Button color={COLORS.SECONDARY} title="Confirmar evento" onPress={onHandlerSave}/>
         </ScrollView>
     )

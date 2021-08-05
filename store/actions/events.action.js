@@ -45,7 +45,6 @@ export const loadEvents = () => {
             })
         } catch (error) {
             console.log('error en loadEvents: ', error)
-            throw error;
         }
     }
 }

@@ -4,7 +4,8 @@ import * as Location from 'expo-location';
 import MapPreview from '../MapPreview';
 import { COLORS } from '../../constants'
 
-const LocationPicker = props => {
+const LocationPicker = ({onSelect}) => {
+    return (<MapPreview onPress={onSelect}/>)
     const [isFetching, setIsFeching] = useState(false);
     const [pickedLocation, setLocation] = useState();
 

@@ -1,1 +1,3 @@
-export default API_MAP_KEY=''
+export default {
+    API_MAP_KEY: ''
+}
