@@ -2,7 +2,7 @@ import React from 'react'
 import { ImageBackground, StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 import { COLORS } from '../../constants'
 
-const EventItem = ({address,image,title,onSelect}) => {
+const EventItem = ({image,title,onSelect}) => {
     return (
         <TouchableOpacity
             onPress={onSelect}
@@ -16,11 +16,7 @@ const EventItem = ({address,image,title,onSelect}) => {
             >
                 <View style={styles.textContainer}>
                     <Text styles={styles.text}> {title} </Text>
-                    <Text> {address} </Text>
                 </View>
-                {!image && (
-                    <Text> Nada para ver por acá...</Text>
-                )}
             </ImageBackground>
         </TouchableOpacity>
     )
@@ -28,17 +24,19 @@ const EventItem = ({address,image,title,onSelect}) => {
 
 const styles = StyleSheet.create({
     image:{
-        height: '100%',
-        width: '100%',
         backgroundColor: COLORS.VIOLET,
+        borderRadius: 8,
+        height: '100%',
+        justifyContent: 'flex-end',
+        width: '100%',
     },
     text:{
-        fontWeight: 'bold',
+        fontSize: 30,
     },
     textContainer:{
-        backgroundColor: 'rgba(255,255,255,0.3)',
         alignItems: 'center',
-        flex: 1,
+        backgroundColor: 'rgba(255,205,255,0.3)',
+        height: 40,
         justifyContent: 'center',
     }
 })

@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { API_MAP_KEY } from '../../constants'
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { API_MAP_KEY, COLORS } from '../../constants'
 
 /*const MapPreview = ({ location, additionalStyles, children }) => {
     const mapPreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?
@@ -23,10 +23,26 @@ import { API_MAP_KEY } from '../../constants'
 
 const MapPreview = ({onPress}) => {
     return(
-        <TouchableOpacity onPress={onPress}>
-            <Text> Proximamente MapPreview </Text>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
+            <Text style={styles.text}> MapPreview (Proximamente) </Text>
         </TouchableOpacity>
     )
 }
 
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+        backgroundColor: COLORS.ACCENT,
+        borderRadius: 10,
+        justifyContent: "center",
+        margin: 5,
+    },
+    text: {
+        color: COLORS.WHITE,
+        fontSize: 20,
+        textAlign: "center",
+        padding: 10,
+    },
+})
 export default MapPreview
+ 

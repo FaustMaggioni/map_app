@@ -8,9 +8,8 @@ import { COLORS } from '../../constants'
 
 const renderItem = (item,navigation) => {
     return(
-    <Card>
+    <Card key={item.id}>
         <EventItem 
-            address={null}
             image={item.image} 
             onSelect={() => navigation.navigate('Detalle',{item: item})}
             title={item.title}
@@ -22,7 +21,6 @@ const PlaceListScreen = ({navigation}) => {
     const dispatch = useDispatch()
     const events = useSelector(state => state.events.events)
 
-    console.log(events)
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (

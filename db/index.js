@@ -59,3 +59,17 @@ export const fetchEvents = () => {
     });
     return promise;
 }
+
+export const deleteEvent = (id) => {
+    const promise = new Promise((resolve, reject) =>{
+        db.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM events WHERE id = ? ', 
+                [id],
+                (_, result) => resolve(result),
+                (_, err) => reject(err),
+            );
+        });
+    })
+    return promise;
+  }

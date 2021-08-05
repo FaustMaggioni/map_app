@@ -1,4 +1,4 @@
-import { ADD_EVENT, LOAD_EVENTS } from '../actions/events.action'
+import { ADD_EVENT, DELETE_EVENT, LOAD_EVENTS } from '../actions/events.action'
 import Event from '../../models/Event'
 
 const initialState = {
@@ -9,7 +9,6 @@ export default (state = initialState, action) => {
     switch(action.type){
         case ADD_EVENT:
             const {payload} = action
-            console.log('action', payload.image)
             const newEvent = new Event(
                 payload.id.toString(), 
                 payload.title, 
@@ -18,7 +17,6 @@ export default (state = initialState, action) => {
             );
             return {...state, events: [...state.events, newEvent] };ç
         case LOAD_EVENTS:
-            console.log("load", action.payload)
             return {...state, events:
                 action.payload.map(item => new Event(
                     item.id.toString(),
@@ -26,6 +24,13 @@ export default (state = initialState, action) => {
                     item.description, 
                     item.image,
                 ))};
+        case DELETE_EVENT:
+            console.log('payload: ', action.payload)
+            const newEvents = state.events.filter((event) => event.id !== action.payload)
+            return {
+                ...state, 
+                events: newEvents,
+                };
         default:
             return state;
     }

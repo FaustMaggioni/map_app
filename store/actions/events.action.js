@@ -1,8 +1,9 @@
 import * as FileSystem from 'expo-file-system';
-import { insertEvent, fetchEvents } from '../../db'
+import { deleteEvent, insertEvent, fetchEvents } from '../../db'
 
 export const ADD_EVENT = 'ADD_EVENT';
 export const LOAD_EVENTS = 'LOAD_EVENTS';
+export const DELETE_EVENT = 'DELETE_EVENT';
 
 export const addEvent = (event) => {
     return async dispatch => {
@@ -36,15 +37,27 @@ export const addEvent = (event) => {
 export const loadEvents = () => {
     return async dispatch => {
         try {
-            console.log('PREVIO A FETCH')
             const result = await fetchEvents();
-            console.log('FETCH EVENTS RESULT', result);
             dispatch({
                 type: LOAD_EVENTS,
                 payload: result.rows._array,
             })
         } catch (error) {
             console.log('error en loadEvents: ', error)
+        }
+    }
+}
+
+export const removeEvent = (id) => {
+    return async dispatch => {
+        try {
+            await deleteEvent(id);
+            dispatch({
+                type: DELETE_EVENT,
+                payload: id,
+            });
+        } catch (error) {
+            console.log('error al borrar: ',error)
         }
     }
 }

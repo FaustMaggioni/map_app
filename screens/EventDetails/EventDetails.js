@@ -1,19 +1,32 @@
-import React from 'react'
-import { ScrollView, Text, StyleSheet, Image } from 'react-native'
-import { COLORS } from '../../constants'
-import { MapPreview } from '../../components'
+import React from 'react';
+import { Button, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import { COLORS } from '../../constants';
+import { MapPreview } from '../../components';
+import { removeEvent } from '../../store/actions/events.action';
+import { useDispatch } from 'react-redux';
 
-const EventDetails = ({route}) => {
-    console.log('route:', route.params)
-    const {title,description, image} = route.params.item
-    console.log('title:', title)
+const EventDetails = ({navigation, route}) => {
+    const dispatch = useDispatch();
+
+    const {title,description, image, id} = route.params.item;
+
+    const handlerSelectMap = () => {
+        navigation.navigate('Map')
+    }
+
+    const handlerDeleteEvent = () => {
+        console.log('ID: !!!!!!: ', id)
+        dispatch(removeEvent(id));
+        navigation.goBack();
+    }
 
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.title}> {title} </Text>
             <Image source={{uri:image}} style={styles.image} resizeMode='cover'/>
             <Text style={styles.description}> {description} </Text>
-            <MapPreview/>
+            <MapPreview onPress={handlerSelectMap}/>
+            <Button color='red' title='BORRAR' onPress={handlerDeleteEvent}/>
         </ScrollView>
     )
 }
