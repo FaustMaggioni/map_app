@@ -48,7 +48,7 @@ export const insertEvent = (
 
 export const fetchEvents = () => {
     const promise = new Promise((resolve, reject) => {
-        db.transaction( tx => {
+        db.transaction((tx) => {
             tx.executeSql(`SELECT * FROM events`),
             [],
             (_, result) => resolve(result),
