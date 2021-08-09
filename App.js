@@ -11,7 +11,7 @@ init()
   .then(() => {console.log('DB initialized')})
   .catch((err) => {
     console.log('Database error',err)
-  })
+  });
 
 export default function App() {
   return (<Provider store={store}><MainNavigator /></Provider>);

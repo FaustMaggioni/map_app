@@ -68,7 +68,7 @@ const ImageSelector = ({onImage}) => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
             <View>
                 {!pickedUri ? (
                     <Text style={styles.selectText}> Selecciona una imagen! </Text>
@@ -79,19 +79,32 @@ const ImageSelector = ({onImage}) => {
                     />
                 )}
             </View>
-            <Button title='Tomar foto' color={COLORS.VIOLET} onPress={handlerTakeImage}/>
-            <Button title='Subir foto' color={COLORS.LIGTH_PINK} onPress={handlerPickImage}/>
+            <Button title='Tomar foto' color={COLORS.WHITE} onPress={handlerTakeImage}/>
+            <Button title='Subir foto' color={COLORS.BLACK} onPress={handlerPickImage}/>
         
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: COLORS.PRIMARY,
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 3.27,
+        elevation: 10,
+        marginVertical: 10,
+    },
     image: {
         alignSelf: 'center',
         borderRadius: 10,
         height: 300,
-        margin: 5,
         resizeMode: 'cover',
         width: '100%',
     },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import { Button, ScrollView, Text, StyleSheet, View, Image } from 'react-native';
 import { COLORS } from '../../constants';
 import { MapPreview } from '../../components';
 import { removeEvent } from '../../store/actions/events.action';
@@ -8,33 +8,43 @@ import { useDispatch } from 'react-redux';
 const EventDetails = ({navigation, route}) => {
     const dispatch = useDispatch();
 
-    const {title,description, image, id} = route.params.item;
+    const { address, title, description, image, id } = route.params.item;
 
     const handlerSelectMap = () => {
         navigation.navigate('Map')
     }
 
     const handlerDeleteEvent = () => {
-        console.log('ID: !!!!!!: ', id)
         dispatch(removeEvent(id));
         navigation.goBack();
     }
-
+    console.log('image: ', image);
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}> {title} </Text>
-            <Image source={{uri:image}} style={styles.image} resizeMode='cover'/>
-            <Text style={styles.description}> {description} </Text>
-            <MapPreview onPress={handlerSelectMap}/>
-            <Button color='red' title='BORRAR' onPress={handlerDeleteEvent}/>
+            <View style={styles.mainInfo}>
+                <Text style={styles.title}> {title} </Text>
+                <Text style={styles.address}> {address} </Text>
+            </View>
+            <View style={styles.additionalInfo}>
+                <Image source={{uri:image}} style={styles.image} resizeMode='cover'/> 
+                <Text style={styles.description}> {description} </Text>
+                <MapPreview buttonTitle='Ver en mapa' onPress={handlerSelectMap}/>
+                <Button color='red' title='BORRAR' onPress={handlerDeleteEvent}/>
+            </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
+    address: {
+        textAlign: 'center',
+        fontSize: 14,
+    },
+    additionalInfo:{
+        margin: 10,
+    },
     container: {
         flex: 1,
-        margin: 10,
     },
     description:{
         fontSize: 15,
@@ -48,10 +58,15 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         width: '100%',
     },
+    mainInfo: {
+        backgroundColor: COLORS.WHITE,
+        width: '100%',
+    },
     title:{
         color: COLORS.SECONDARY,
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: 'bold',
+        marginVertical: 5,
         textAlign: 'center',
     }
 })

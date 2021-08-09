@@ -1,34 +1,74 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { COLORS } from '../../constants'
+import React, { useState, useCallback, useLayoutEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { COLORS } from '../../constants';
+import MapView, { Marker } from 'react-native-maps';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButton } from '../../components';
+import { setLocation } from '../../store/actions/location.action';
 
-const MapScreen = () => {
+const MapScreen = ({route, navigation}) => {
+    const dispatch = useDispatch();
+    const selectedLocation = useSelector(state => state.location);
+    const allowsEditing = route.params?.allowsEditing;
+    const region = {
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    }
+
+    const savePickedLocationHandler = useCallback(() => {
+        if (!selectedLocation) return;
+
+        navigation.navigate('Nuevo');
+    }, [selectedLocation]);
+
+    const selectedLocationHandler = event => {
+        if(allowsEditing) {
+        dispatch(
+            setLocation({
+            latitude: event.nativeEvent.coordinate.latitude,
+            longitude: event.nativeEvent.coordinate.longitude,
+            })
+        );
+    }}
+
+    useLayoutEffect(() => {
+        if (allowsEditing) {navigation.setOptions({
+            headerRight: () => (
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item
+                        color= {COLORS.ACCENT}
+                        title= "Guardar"
+                        iconName= "save-outline"
+                        onPress= {savePickedLocationHandler}
+                    />
+                </HeaderButtons>
+            )
+        })}
+    }, [navigation]);
+
+    let markerCoordinates;
+    if (selectedLocation) {
+        markerCoordinates = {
+            latitude: selectedLocation.latitude,
+            longitude: selectedLocation.longitude
+        };
+    }
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}> Map View </Text>
-            <Text style={styles.prox}> Proximamente... </Text>
-        </View>
+        <MapView initialRegion={region} style={styles.map} onPress={selectedLocationHandler}>
+            {markerCoordinates && (
+                <Marker title='Ubicación seleccionada' coordinate={markerCoordinates} />
+            )}
+        </MapView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        backgroundColor: COLORS.WHITE,
-        borderColor: COLORS.ACCENT,
-        borderRadius: 10,
-        borderWidth: 1,
+    map:{
         flex: 1,
-        justifyContent: 'center',
-        margin: 10,
-    },
-    text:{
-        fontSize: 30,
-        fontWeight: '300',
-        marginVertical: 10,
-    },
-    prox:{
-        fontWeight: 'bold',
     },
 })
 

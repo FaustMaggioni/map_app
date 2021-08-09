@@ -1,67 +1,47 @@
-import React, { useState, useReducer } from 'react';
-import { Button, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useReducer, useEffect } from 'react';
+import { Alert, Button, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { COLORS } from '../../constants';
-import { ADD_EVENT, addEvent } from '../../store/actions/events.action';
+import { addEvent } from '../../store/actions/events.action';
 import { ImageSelector, LocationPicker } from '../../components'
+import { 
+    addEventReducer, 
+    initialState, 
+    addTitle, 
+    addDescription, 
+    addImage, 
+    setLocation, 
+    cleanReducer } from './addEventReducer';
 
-const initialState = {
-    title: '',
-    description: '',
-    image: '',
-}
-const reducer = (state, action) => {
-    switch (action.type){
-        case "ADD_TITLE":
-            return {...state, title: action.payload};
-        case "ADD_DESCRIPTION":
-            return {...state, description: action.payload};
-        case "ADD_IMAGE":
-            return {...state, image: action.payload};
-        case "CLEAN_REDUCER":
-            return initialState;
-        default: 
-            return state;
-    };
-}
-
-const addTitle = (title) => ({
-    type: "ADD_TITLE",
-    payload: title,
-})
-const addDescription = (description) => ({
-    type: "ADD_DESCRIPTION",
-    payload: description,
-})
-const addImage = (image) => ({
-    type: "ADD_IMAGE",
-    payload: image,
-})
-const cleanReducer = () => ({
-    type: "CLEAN_REDUCER",
-})
-
-const AddEventScreen = ({navigation}) => {
+const AddEventScreen = ({ navigation }) => {
     const dispatch = useDispatch();
-    const [state, localDispatch] = useReducer(reducer, initialState);
-
+    const [state, localDispatch] = useReducer(addEventReducer, initialState);
     const onHandlerTitle = title => localDispatch(addTitle(title));
     const onHandlerDescription = description => localDispatch(addDescription(description));
     const onHandlerImageTaken = path => localDispatch(addImage(path));
+    const onHandlerLocationPicked = location => localDispatch(setLocation(location));
+    const pickedLocation = useSelector(state => state.location);
+
+    useEffect(()=>{
+        if(pickedLocation) {
+        onHandlerLocationPicked(pickedLocation);
+        }
+    },[pickedLocation])
 
     const onHandlerSave = () => {
+        if(state.image && state.title && state.description && state.location) {
         dispatch(addEvent(state));
         localDispatch(cleanReducer());
         navigation.goBack();
-    }
-
-    const handlerSelectMap = () => {
-        navigation.navigate('Map')
+        } else{
+            alert('Debes completar todos los campos para guardar')
+        }
     }
 
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.text}> Ingrese los datos del evento </Text>
+            
             <TextInput
                 onChangeText={onHandlerTitle} 
                 placeholder='Título'
@@ -74,9 +54,10 @@ const AddEventScreen = ({navigation}) => {
                 placeholder='Descripción'
                 value={state.description}
                 style={[styles.input,styles.inputDescription]}/>
+
             <ImageSelector onImage={onHandlerImageTaken}/>
-            <LocationPicker onSelect={handlerSelectMap} />
-            <Button color={COLORS.SECONDARY} title="Confirmar evento" onPress={onHandlerSave}/>
+            <LocationPicker navigation={navigation}/>
+            <Button color={COLORS.BLACK} title="Confirmar evento" onPress={onHandlerSave}/>
         </ScrollView>
     )
 }
@@ -88,7 +69,7 @@ const styles = StyleSheet.create({
     },
     input:{
         backgroundColor: COLORS.WHITE,
-        borderColor: COLORS.ACCENT,
+        borderColor: COLORS.PRIMARY,
         borderRadius: 5,
         borderWidth: 1,
         height: 35,
@@ -99,7 +80,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     text:{
-        color: COLORS.ACCENT,
+        color: COLORS.BLACK,
         fontSize: 30,
         textAlign: 'center',
     }

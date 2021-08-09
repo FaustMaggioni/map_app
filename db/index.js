@@ -12,8 +12,8 @@ export const init = () => {
                  description TEXT NOT NULL,
                  image TEXT NOT NULL, 
                  address TEXT NOT NULL, 
-                 lat REAL NOT NULL, 
-                 lng REAL NOT NULL )`,
+                 latitude REAL NOT NULL, 
+                 longitude REAL NOT NULL )`,
                 [],
                 ()=> { resolve()},
                 (_, err) => { reject(err)})
@@ -73,3 +73,6 @@ export const deleteEvent = (id) => {
     })
     return promise;
   }
+
+
+

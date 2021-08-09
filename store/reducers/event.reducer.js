@@ -14,18 +14,24 @@ export default (state = initialState, action) => {
                 payload.title, 
                 payload.description, 
                 payload.image,
+                payload.address,
+                payload.coords.latitude,
+                payload.coords.longitude,
             );
-            return {...state, events: [...state.events, newEvent] };ç
+            
+            return {...state, events: [...state.events, newEvent] };
         case LOAD_EVENTS:
-            return {...state, events:
-                action.payload.map(item => new Event(
-                    item.id.toString(),
-                    item.title, 
-                    item.description, 
-                    item.image,
-                ))};
+            const newArr = action.payload.map(item => new Event(
+                item.id.toString(),
+                item.title, 
+                item.description, 
+                item.image,
+                item.address,
+                item.lat, 
+                item.lng,
+            ))
+            return {...state, events: newArr};
         case DELETE_EVENT:
-            console.log('payload: ', action.payload)
             const newEvents = state.events.filter((event) => event.id !== action.payload)
             return {
                 ...state, 

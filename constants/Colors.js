@@ -4,6 +4,6 @@ export default {
   ACCENT: "#88D498",
   LIGTH_PINK: "#EC9DED",
   VIOLET: "#A997DF", 
-  WHITE: "#FFFF",
+  WHITE: "#FFFFF6",
   BLACK: "#000111"
 };

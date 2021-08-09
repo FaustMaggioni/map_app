@@ -1,21 +1,32 @@
 import React, { useLayoutEffect, useEffect } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
-import { Card, EventItem, HeaderButton} from '../../components'
+import { Card, EventItem, HeaderButton, ListPlaceHolder } from '../../components'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadEvents } from '../../store/actions/events.action'
 import { COLORS } from '../../constants'
+import { setLocation } from '../../store/actions/location.action';
 
-const renderItem = (item,navigation) => {
+const renderItem = (dispatch, item, navigation) => {
+    
     return(
     <Card key={item.id}>
         <EventItem 
             image={item.image} 
-            onSelect={() => navigation.navigate('Detalle',{item: item})}
+            onSelect={() => onHandlerSelect(dispatch, item, navigation)}
             title={item.title}
         />
     </Card>
 )}
+
+const onHandlerSelect = (dispatch, item, navigation) => {
+    const location = {
+        latitude: item.latitude,
+        longitude: item.longitude,
+    }
+    dispatch(setLocation(location))
+    navigation.navigate('Detalle',{item: item})
+}
 
 const PlaceListScreen = ({navigation}) => {
     const dispatch = useDispatch()
@@ -43,7 +54,8 @@ const PlaceListScreen = ({navigation}) => {
         <FlatList 
         data={events}
         keyExtractor={item => item.id}
-        renderItem={itemData => renderItem(itemData.item,navigation)}
+        ListEmptyComponent={ListPlaceHolder}
+        renderItem={itemData => renderItem(dispatch, itemData.item, navigation)}
         style={styles.container}/>
     )
 }
