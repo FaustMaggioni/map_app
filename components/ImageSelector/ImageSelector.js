@@ -23,7 +23,6 @@ const verifyPermissions = (status) => {
     }
     return true;
 }
-
 const takeImage = async () => {
     const isCameraOK = await verifyCameraPermissions()
     if(!isCameraOK) return;
@@ -70,13 +69,13 @@ const ImageSelector = ({onImage}) => {
     return (
         <View style={styles.container}>
             <View>
-                {!pickedUri ? (
-                    <Text style={styles.selectText}> Selecciona una imagen! </Text>
-                ):(
+                {pickedUri ? (
                     <Image
-                        style={styles.image}
-                        source={{uri: pickedUri}}
-                    />
+                    style={styles.image}
+                    source={{uri: pickedUri}}
+                />
+                ):(
+                    <Text style={styles.selectText}> Selecciona una imagen! </Text>
                 )}
             </View>
             <Button title='Tomar foto' color={COLORS.WHITE} onPress={handlerTakeImage}/>

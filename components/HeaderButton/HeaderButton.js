@@ -15,4 +15,4 @@ const CustomHeaderButton = () => {
     )
 }
 
-export default HeaderButton
+export default CustomHeaderButton

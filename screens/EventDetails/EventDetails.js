@@ -7,9 +7,7 @@ import { useDispatch } from 'react-redux';
 
 const EventDetails = ({navigation, route}) => {
     const dispatch = useDispatch();
-
     const { address, title, description, image, id } = route.params.item;
-
     const handlerSelectMap = () => {
         navigation.navigate('Map')
     }
@@ -18,7 +16,7 @@ const EventDetails = ({navigation, route}) => {
         dispatch(removeEvent(id));
         navigation.goBack();
     }
-    console.log('image: ', image);
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.mainInfo}>

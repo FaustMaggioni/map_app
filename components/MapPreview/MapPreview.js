@@ -8,7 +8,6 @@ const MapPreview = ({ additionalStyles={}, buttonTitle, children, onPress }) => 
     const [mapPreviewUrl, setMapPreviewUrl] = useState();
 
     useEffect(()=> {
-        console.log('location en preview', location);
         setUrl()
         return;
     }, [location] );
@@ -18,13 +17,15 @@ const MapPreview = ({ additionalStyles={}, buttonTitle, children, onPress }) => 
         setMapPreviewUrl(
             `https://maps.googleapis.com/maps/api/staticmap?
             &center=${location.latitude},${location.longitude}
-            &zoom=10
+            &zoom=14
             &size=600x300
-            &maptype=roadmap
-            &markers=color:blue%7Clabel:S%7C${location.latitude},${location.longitude}
+            &scale=2
+            &maptype=hybrid
+            &markers=color:red%7Clabel:C%7C|${location.latitude},${location.longitude}
             &key=${MAP.API_MAP_KEY}`
             );
         };
+        console.log(mapPreviewUrl)
     }, [location])
 
     return (
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     image:{
+        borderRadius: 5,
         width: '100%',
         height: 300,
         resizeMode: 'cover',
