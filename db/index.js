@@ -28,15 +28,15 @@ export const insertEvent = (
     description,
     image,
     address,
-    lat,
-    lng,
+    latitude,
+    longitude,
 ) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                `INSERT INTO events (title, description, image, address, lat, lng)
+                `INSERT INTO events (title, description, image, address, latitude, longitude)
                  VALUES (?,?,?,?,?,?)`,
-                 [title,description,image,address,lat,lng],
+                 [title,description,image,address,latitude,longitude],
                  (_, result) => resolve(result),
                  (_, error) => reject(error)
             )

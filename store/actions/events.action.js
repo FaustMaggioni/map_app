@@ -80,4 +80,4 @@ export const removeEvent = (id) => {
             console.log('error al borrar: ',error)
         }
     }
-}
+};
